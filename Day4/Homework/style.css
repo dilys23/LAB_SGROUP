@@ -1,0 +1,149 @@
+.picture-box1 {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+    transform: translate(200px, 100px);
+    margin-bottom: 500px;
+}
+
+.title-box1 {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Để căn giữa theo cả chiều ngang và chiều dọc */
+    transition: 0.5s;
+    transform: translateY(100%);
+}
+
+.title-box2 {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    transform: translateY(100%);
+}
+
+.image1 {
+    width: 400px;
+    height: 400px;
+}
+
+.title-box1 p {
+    color: white; /* Đổi màu văn bản thành trắng */
+    text-align: center; /* Căn giữa theo chiều ngang */
+    font-size: 20px;
+}
+
+.title-box2 p,
+.title-box2 h1 {
+    color: black;
+    font-size: 20px;
+    margin: 0;
+    transition: 0.5s;
+}
+
+.title-box2 .icon {
+    margin-left: 100px;
+}
+
+.picture {
+    width: 400px;
+    height: 400px;
+    transform: scale(1);
+    transition: 0.5s;
+}
+
+.picture-box1:hover .title-box1 {
+    transform: translateY(-200px);
+}
+
+.picture-box1:hover .title-box2 {
+    transform: translateY(0);
+}
+
+
+.picture-box1:hover .title-box2 h1 {
+    transform: translateY(-10px);
+}
+
+.container{
+    box-sizing: border-box;
+    width: 100%;
+    height: 350px;
+    display: flex;
+    margin: 10px;
+    justify-content: center;
+    
+}
+.picture-box2{
+    
+    margin: 20px;
+    box-sizing: border-box;
+    width: 400px;
+    height: 300px;
+    position: relative; 
+    opacity: 0.5;
+    transform: translate(170px, -300px); 
+}
+.picture-box2 .image2{
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    min-width: 320px;
+    max-width: 480px;
+    max-height: 360px;
+    width: 400px;
+    height: 300px;
+}
+img{
+    background:  #3085a3;
+    position: absolute;    
+    width: 500px;
+    border: 0;
+    display: block;
+    transform: translateX(-30px);
+}
+.picture-box2:hover{
+    opacity: 1;
+}
+.picture-box2:hover img{
+    transform: translateX(30px);
+    transition: 0.5s;
+}
+.picture-box2 .title-box3 h2{
+    font-weight: 50;
+}
+.picture-box2 .title-box3 h2 span{
+    font-weight: 900;
+}
+.picture-box2 .title-box3 p{
+    visibility: hidden;
+    font-weight: 50;
+}
+.picture-box2 .title-box3{
+    width: 100%;
+    position: absolute;
+    top: 350px;
+    color: aliceblue;
+    font-size: 17px;
+    transform: translate(50px,-150px);
+}
+.picture-box2:hover .title-box3{
+    transition: 0.5s;
+    transform: translate(50px,-200px);
+}
+.picture-box2:hover .title-box3 p{
+    visibility: visible;
+    transform: translateY(-20px);
+    transition: 0.5s;
+}

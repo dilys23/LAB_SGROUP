@@ -1,0 +1,82 @@
+* {
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+}
+.parent
+{
+    width: 200px; 
+    height: 200px;
+    border-radius: 50%;
+    background-color: aqua;
+    margin: 100px;
+    transition-delay: 1s;
+    transition-duration: 2s;
+    transition-timing-function: ease-in;
+}
+
+ .child
+{
+    width: 100px;
+    height: 100px;
+    background-color: rgb(235, 184, 237);
+    border-radius: 50%;
+    transform: translate(100px,-200px);
+    transition-duration: 3s;
+    transition-timing-function: ease-in-out;
+
+}
+ .child:hover{
+    transform: translate(100px);
+
+}
+.parent:hover
+{
+    background-color: rgb(8, 82, 210);
+    transform: scale(2);
+
+}.picture-box {
+    width: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.title {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8); /* Một lớp mờ để làm rõ chữ */
+    padding: 10px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    transform: translateY(100%);
+}
+
+.image {
+    width: 100%;
+}
+
+.title h1 {
+    color: black;
+    margin: 0;
+    transition: 0.5s;
+}
+
+.picture {
+    width: 100%;
+    height: auto;
+    transform: scale(1);
+    transition: 0.5s;
+}
+
+.picture-box:hover .title {
+    transform: translateY(0);
+}
+
+.picture-box:hover .picture {
+    /* transform: scale(1.1); Phóng to ảnh khi hover */
+}
+
+.picture-box:hover .title h1 {
+    transform: translateY(-10px);
+}
