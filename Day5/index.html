@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .navbar-header 
+        {
+            display: flex;
+            justify-content: space-between;
+        }
+        .title-left-list , .title-right-list
+        {
+            list-style-type: none ;
+            display: flex;
+            gap: 10px
+        }
+        @media screen and (min-width: 1025px) {
+            .title-left-list {
+                display: flex;
+                
+            }
+        
+            .nav-title-left li {
+                display: flex;
+            }
+        
+          
+        }
+
+        @media screen and (max-width: 1024px){
+            .title-left-list
+            {
+                display: flex;
+            }
+            .nav-title-left li {
+                display: none; 
+            }
+        
+            .nav-title-left li:first-child {
+                display: flex;
+            }
+
+        }
+
+       /* Bố cục màn hình nhỏ hơn hoặc bằng 560px */
+@media screen and (max-width: 560px) {
+    .title-left-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-title-left li {
+        display: none;
+    }
+
+    .nav-title-left li:first-child {
+        display: flex;
+    }
+
+    .nav-right .button-search {
+        order: -1; /* Đảo ngược thứ tự xuất hiện, để nó xuất hiện trước title-right-list */
+    }
+
+    .title-right-list {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .title-right-list button {
+        margin-top: 10px; /* Thêm margin để tạo khoảng cách giữa button và icon search */
+    }
+}
+
+          
+    </style>
+</head>
+<body>
+    <div class="navbar-header">
+        <div class="nav-left">
+            <div class="logo"></div>
+            <div class="nav-title-left">
+                <ul class="title-left-list">
+                    <li><i class="fa-brands fa-instagram"></i></li>
+                    <li>Why GitLab</li>
+                    <li>Platform</li>
+                    <li>Solutions</li>
+                    <li>Pricing</li>
+                    <li>Resources</li>
+                    <li>Company</li>
+                    <li>Contact us</li>
+                </ul>
+            </div>
+        </div>
+        <div class="nav-right">
+            <ul class="title-right-list">
+                <li class="button-search"><i class="fa-solid fa-magnifying-glass"></i></li>
+                <li><button class="">Get tree trial</button></li>
+                <li>Sign in</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
