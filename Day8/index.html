@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container
+        {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50%;
+            transform: translate(350px, 100px);
+        ;
+        }
+        .container .header
+        {
+           font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        .container input 
+        {
+            margin-top: 20px;
+            width: 70%;
+            height: 40px;
+            border-color: white;
+        }
+        .container button
+        {
+            margin-top: 20px;
+            width: 70%;
+            height: 40px;
+            background-color: rgb(52, 52, 52);
+            color:  white;
+        }
+       
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Form Đăng Kí</h1>
+        </div>
+        <input type="text" class="hoten" placeholder="Họ và tên">
+        <input type="text" class="email" placeholder="Email">
+        <input type="password" class="pass" placeholder="Mật khẩu"  >
+        <button class="submit">Đăng kí</button>
+    </div>
+    <script src="main.js"></script>
+    
+</body>
+</html>

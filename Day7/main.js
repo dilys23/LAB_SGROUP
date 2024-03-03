@@ -57,3 +57,27 @@ console.log(data7.join(', '));
 const data8 = [2, -1, -8];
 const newData = data8.map(num => Math.abs(num));
 console.log(newData);
+
+const data9 = [1, 10, 9, 2 , 3 , 6, 7, 9];
+
+function abc (data9) {
+ return data9 ===9 }
+
+ const result = data9.find(num => num === 9 );
+ console.log(result);
+
+const result1 = data9.filter(num => num > 5);
+console.log(result1);
+function Tinhtong(Sum, result1)
+{
+  return Sum += result1;
+}
+const kqua  = result1.reduce(Tinhtong)
+console.log(kqua);
+
+// cách khác
+
+const sum = result1.reduce((a, b) => a + b, 0);
+
+console.log(sum); // Output: 15
+
