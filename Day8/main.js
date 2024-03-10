@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     function validateInput(input) {
         const value = input.value.trim();
-        const isValid = input.classList.contains('email') ? isValidEmail(value) : !!value; 
+        const isValid = input.classList.contains('email') ? isValidEmail(value) : value; 
         input.style.borderColor = isValid ? 'white' : 'red';
     }
 
