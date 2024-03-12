@@ -11,6 +11,12 @@
     overflow-x: hidden;
     }
   
+    .container
+    {
+      display: flex;
+      flex-direction:column ;
+      flex-wrap: nowrap;
+    }
 .slide-container .prev,
 .slide-container .next {
   cursor: pointer;
@@ -44,7 +50,8 @@
 .dots-container {
   
   display: flex;
-  flex-direction: row;
+  /* flex-direction: ; */
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   padding: 10px;
@@ -84,6 +91,7 @@
 }
 
 .slide-container .slide.fade {
+  width: 100%;
   animation: fade 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
 
