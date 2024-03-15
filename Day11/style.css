@@ -34,7 +34,7 @@
 .user .descript
 {
     display:block;
-    height:100px;
+    height:60px;
     word-wrap:break-word;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -43,8 +43,9 @@
 
 .user .img
 {
-    max-width:150px; 
+    max-width:140px; 
     margin-top: 50px; 
+    object-fit: cover;
 }
 .category
 {
