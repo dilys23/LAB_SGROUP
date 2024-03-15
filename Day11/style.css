@@ -34,7 +34,7 @@
 .user .descript
 {
     display:block;
-    height:130px;
+    height:100px;
     word-wrap:break-word;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -80,9 +80,9 @@ button {
     font-family: Phantomsans, sans-serif;
     font-size: 18px;
     justify-content: center;
-    line-height: 0.4em;
-    max-width: 100%;
-    min-width: 100px;
+    line-height: 0.3em;
+    max-width: 70%;
+    min-width: 80px;
     padding: 3px;
     text-decoration: none;
     user-select: none;
