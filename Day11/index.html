@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <button id="load_data">Load data</button>
+    <div id="container"></div>
+    <div class="button_after" style="display: flex; justify-content:center; gap: 20px">
+        <button id="see_more" style="display: none;">See more</button>
+        <button id="hide_less" style="display: none;">Hide less</button>
+    </div>
+    <script type="text/javascript">
+        var load_dataBtn = document.getElementById('load_data');
+        load_dataBtn.addEventListener('click', loadProducts);
+
+        var startIndex = 0;
+        var productsData = [];
+        var initialProductsData = []; // Khởi tạo mảng lưu trữ dữ liệu sản phẩm ban đầu
+
+        function loadProducts() {
+            fetch("https://fakestoreapi.com/products?limit=10")
+                .then(function (response) {
+                    if (response.status !== 200) {
+                        console.log('Looks like there was a problem. Status Code: ' +
+                            response.status);
+                        return;
+                    }
+                    response.json().then(function (data) {
+                        console.log("Nhan duoc", data);
+                        productsData = data;
+                        initialProductsData = data.slice(); // Lưu trữ dữ liệu sản phẩm ban đầu
+                        displayProducts();
+                    });
+                })
+                .catch((error) => console.error("Fetch error:", error));
+        }
+        function displayProducts() {
+            const slicedData = productsData.slice(startIndex, startIndex + 5);
+            const string = slicedData.reduce((acc, user) => {
+                return (
+                    acc +
+                    `<div class="user">
+                <label class="" style="display: none">ID product : </label>
+                <span style="display: none">${user.id} </span>
+                <br>
+                <div class="image">
+                    <img src="${user.image}" alt="" class="img">
+                    <br>
+                </div>
+                <div class="content">
+                    <h3 class="title">${user.title}</h3>
+                    <h5 class="category">Type:  ${user.category} </h5>
+                    <span class="descript">${user.description} </span>
+
+                    <div class="price-infor">
+
+                        <span class="price">${user.price} </span>
+                        <span class="rate">${user.rating.rate} (${user.rating.count}) </span>
+
+                    </div>
+
+                    <br>
+                </div>
+            </div>`
+                );
+            }, "");
+            document.getElementById("container").innerHTML += string;
+
+           
+                   document.getElementById("see_more").style.display = "block";
+         
+           
+      
+            document.getElementById("hide_less").style.display = "block";
+        }
+
+        function hiddenProducts() {
+            // Lấy 5 sản phẩm ban đầu từ mảng initialProductsData
+            const slicedData = initialProductsData.slice(0, 5);
+            const string = slicedData.reduce((acc, user) => {
+                return (
+                    acc +
+                    `<div class="user">
+                <label class="" style="display: none">ID product : </label>
+                <span style="display: none">${user.id} </span>
+                <br>
+                <div class="image">
+                    <img src="${user.image}" alt="" class="img">
+                    <br>
+                </div>
+                <div class="content">
+                    <h3 class="title">${user.title}</h3>
+                    <h5 class="category">Type:  ${user.category} </h5>
+                    <span class="descript">${user.description} </span>
+
+                    <div class="price-infor">
+
+                        <span class="price">${user.price} </span>
+                        <span class="rate">${user.rating.rate} (${user.rating.count}) </span>
+
+                    </div>
+
+                    <br>
+                </div>
+            </div>`
+                );
+            }, "");
+
+            // Ẩn đi 5 sản phẩm sau
+            const container = document.getElementById("container");
+            for (let i = 0; i < 5; i++) {
+                container.removeChild(container.lastChild);
+            }
+        }
+        document.getElementById("see_more").addEventListener('click', function () {
+            startIndex += 5;
+            displayProducts();
+            
+            
+        });
+
+        document.getElementById("hide_less").addEventListener('click', function () {
+
+            hiddenProducts();
+            startIndex -= 5;
+            // Ẩn nút "Hide less" nếu không còn sản phẩm để ẩn
+            if (startIndex <= -5) {
+                document.getElementById("hide_less").style.display = "none";
+                document.getElementById("see_more").style.display = "none";
+            }
+            startIndex = 0;
+        });
+
+    </script>
+</body>
+
+</html>

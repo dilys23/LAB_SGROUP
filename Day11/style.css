@@ -1,0 +1,40 @@
+#container 
+{
+    position: relative;
+    display: flex;
+    padding: 40px 50px;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+.user
+{
+   display: flex;
+   border: solid 1px black;
+   border-radius: 15px;
+    flex-grow: 1;
+    flex-basis: 200;
+    width: 400px;
+    height: 300px; 
+    padding: 10px;
+    gap: 14px;
+    
+}
+.user .descript
+{
+    display:block;
+    height:130px;
+    word-wrap:break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+.price-infor
+{
+    margin-top: 10px;
+}
+.user .img
+{
+    max-width:150px; 
+    margin-top: 50px; 
+}
