@@ -9,11 +9,11 @@
 </head>
 
 <body>
-    <button id="load_data">Load data</button>
+    <button id="load_data"><span class="text">Load</span></button>
     <div id="container"></div>
     <div class="button_after" style="display: flex; justify-content:center; gap: 20px">
-        <button id="see_more" style="display: none;">See more</button>
-        <button id="hide_less" style="display: none;">Hide less</button>
+        <button id="see_more" style="display: none;"><span class="text">See more</span></button>
+        <button id="hide_less" style="display: none;"><span class="text">Hide less</span></button>
     </div>
     <script type="text/javascript">
         var load_dataBtn = document.getElementById('load_data');
@@ -24,7 +24,7 @@
         var initialProductsData = []; // Khởi tạo mảng lưu trữ dữ liệu sản phẩm ban đầu
 
         function loadProducts() {
-            fetch("https://fakestoreapi.com/products?limit=10")
+            fetch("https://fakestoreapi.com/products")
                 .then(function (response) {
                     if (response.status !== 200) {
                         console.log('Looks like there was a problem. Status Code: ' +
@@ -73,11 +73,16 @@
             document.getElementById("container").innerHTML += string;
 
            
-                   document.getElementById("see_more").style.display = "block";
+            document.getElementById("see_more").style.display = "block";
+           
+           
          
            
-      
+           if (startIndex > 0)
+           {
             document.getElementById("hide_less").style.display = "block";
+        }
+           
         }
 
         function hiddenProducts() {
@@ -121,6 +126,9 @@
         document.getElementById("see_more").addEventListener('click', function () {
             startIndex += 5;
             displayProducts();
+            if ((startIndex +   5 )== (productsData.length )) {
+                document.getElementById("see_more").style.display = "none";
+            }
             
             
         });
@@ -132,8 +140,9 @@
             // Ẩn nút "Hide less" nếu không còn sản phẩm để ẩn
             if (startIndex <= -5) {
                 document.getElementById("hide_less").style.display = "none";
-                document.getElementById("see_more").style.display = "none";
             }
+            
+          
             startIndex = 0;
         });
 
