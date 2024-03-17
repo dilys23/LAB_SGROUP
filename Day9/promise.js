@@ -62,10 +62,10 @@ myPromise
 //     console.log();
 //   });
 
-const api = 'https://jsonplaceholder.typicode.com/todos/1'
-fetch(api).then((response) => {
-    console.log(response.json());
-    return response.json();
-}).then((data) => {
-    console.log('Nhan duoc', data)
-})
+// const api = 'https://jsonplaceholder.typicode.com/todos/1'
+// fetch(api).then((response) => {
+//     console.log(response.json());
+//     return response.json();
+// }).then((data) => {
+//     console.log('Nhan duoc', data)
+// })
