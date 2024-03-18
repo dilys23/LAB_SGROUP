@@ -66,11 +66,8 @@
 
 /* #5b7065, black */
 body {
-  background: rgba(48, 64, 64, 1.0); 
-  background: -webkit-radial-gradient(center, rgba(48, 64, 64, 1.0) 0%, rgba(0, 0, 0, 1.0) 100%);
-  background: -moz-radial-gradient(center, rgba(48, 64, 64, 1.0) 0%, rgba(0, 0, 0, 1.0) 100%);
-  background: radial-gradient(ellipse at center, rgba(48, 64, 64, 1.0) 0%, rgba(0, 0, 0, 1.0) 100%);
-  font-family: 'Shadows Into Light', cursive;
+  background: rgb(193, 246, 246); 
+ font-family: 'Shadows Into Light', cursive;
   min-height: 100vh;
 }
 
@@ -78,7 +75,7 @@ button {
   height: fit-content;
   cursor: pointer;
   color: #04202c;
-  background-color: #c9d1c8;
+  background-color: rgb(88, 184, 247);
 }
 
 .app {
@@ -87,8 +84,13 @@ button {
   padding-top: 50px;
   color: white;
 }
-
+.app h1{
+  display: flex;
+  justify-content: center;
+  color: #0065a0;
+}
 .input-header {
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -96,10 +98,15 @@ button {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 0px 0px 10px 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .to-do-input input {
-  width: 250px;
+  width: 530px;
+  color: #0065a0;
+  font-size:  20px;
+  height: 40px;
   font-family: inherit;
   border: none;
   border-top-left-radius: 10px;
@@ -109,8 +116,9 @@ button {
 }
 
 .to-do-input button {
-  color: #5b7065;
+  color: #024d93;
   font-family: inherit;
+  height: 60px;
   border: none;
   padding: 10px;
   border-top-right-radius: 10px;
@@ -124,7 +132,7 @@ button {
 }
 
 .to-do-list i {
-  color: #c9d1c8;
+  color: #000000;
   cursor: pointer;
 }
 
@@ -144,7 +152,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: white;
   border-radius: 10px;
   padding: 8px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
@@ -161,7 +169,6 @@ button {
   border: none;
   resize: none;
   line-height: 1.4;
-  color: white;
   border-radius: 10px;
   background-color: transparent;
   font-size: 1.2rem;
