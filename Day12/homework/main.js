@@ -1,126 +1,108 @@
-// //local storage key
-// const STORAGE_KEY = "tasks-storage-key";
 
-// // variables object
-// const el = {
-//   form: document.querySelector(".form"),
-//   input: document.querySelector(".user-input"),
-//   list: document.querySelector(".list"),
-//   date: document.querySelector(".date"),
-//   time: document.querySelector(".time"),
-// };
-
-// //Create ID
-
-// const createId = () =>
-//   `${Math.floor(Math.random() * 10000)}${new Date().getTime()}`;
-
-// //variable of empty array that gets new task
-// let taskList = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? "[]");
-
-// function makeNewTask() {
-//   const data = {
-//     id: createId(),
-//     taskNew: el.input.value,
-//     taskDate: el.date.value,
-//     taskTime: el.time.value,
-//   };
-
-//   return data;
-// }
-
-// //function that creates new tasks with date and time
-// function display() {
-//   const tasks = document.createElement("div");
-
-//   data = makeNewTask();
-
-//   let newtask = tasks.innerHTML = `
-//          <div class="task-content">
-//           <div class="task" data-id="${data.id}">
-//           <div class="new-task-created">${data.taskNew}</div>
-//           <label class="due-date">${data.taskDate}</label>
-//           <label class="due-time">${data.taskTime}</label>
-//       </div>
-  
-//       <div class="action-buttons">
-//           <button onclick="editItem(event)" class="edit" data-id="${data.id}">Edit</button>
-//           <button onclick="deleteItem(event)" class="delete" data-id="${data.id}">Delete</button>
-//           <button onclick="completeItem(event)" class="complete" data-id="${data.id}">Complete</button>
-//       </div>
-//   </div>`;
-
-//   taskList.push(data);
-//   console.log(taskList);
-//   el.list.appendChild(tasks);
-//   storeList();
-// }
-
-// //event listner that listens for add button.
-// function addTask() {
-//   display();
-  
-// }
-
-// //function that stores task list.
-// function storeList() {
-//   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(taskList));
-// }
-
-// //function that removes task from array with delete button.
-
-// function deleteItem() {
-//   let removeitem = document.querySelector(".task-content");
-//   removeitem.parentNode.removeChild(removeitem);
-//   window.localStorage.removeItem(STORAGE_KEY);
-// }
-
-// //function that removes stored task when deleted.
-
-// //function that that edits tasks with date and time.
-// function editItem() {}
-
-// //function that that completes task.
-// function completeItem(event) {
-//   const element = event.target.closest(".task-content");
-//   console.log(element);
-//   let taskItem = element.querySelector(".new-task-created");
-//   let dateItem = element.querySelector(".due-date");
-//   let timeItem = element.querySelector(".due-time");
-//   // style..
-//   taskItem.style.textDecoration = "line-through";
-//   dateItem.style.textDecoration = "line-through";
-//   timeItem.style.textDecoration = "line-through";
-// }
 const itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+const count = document.querySelector(".count-value");
+let taskCount = 0;
+
+
+const displayCount = (taskCount) =>
+{
+  count.innerText = taskCount;
+}
+
+// function createItem(item){
+//   itemsArray.push(item);
+//   localStorage.setItem('items', JSON.stringify(itemsArray));
+//   displayItems(); // Cập nhật giao diện người dùng
+//   taskCount++; // Tăng taskCount lên 1
+//   displayCount(taskCount); // Hiển thị số lượng nhiệm vụ mới
+// }
+
+const taskCheck = document.querySelectorAll(".check-box");
+
+function createItem(item){
+  const newItem = { text: item, status: "undone" }; 
+  itemsArray.push(newItem);
+  localStorage.setItem('items', JSON.stringify(itemsArray));
+  displayItems(); 
+  taskCount++; 
+  displayCount(taskCount);
+}
+
+function markAsDone(i) {
+  itemsArray[i].status = "done"; 
+  localStorage.setItem('items', JSON.stringify(itemsArray));
+  displayItems();
+}
+
+function markAsUndone(i) {
+  itemsArray[i].status = "undone"; 
+  localStorage.setItem('items', JSON.stringify(itemsArray)); 
+  displayItems();
+}
+
+taskCheck.forEach((checkBox, i) => {
+    checkBox.addEventListener('change', function() {
+        const itemText = this.closest('.item').querySelector('textarea');
+        if (this.checked) {
+            itemText.style.textDecoration = "line-through";
+            markAsDone(i); 
+            console.log("done task nè heee");
+        } else {
+            itemText.style.textDecoration = "none";
+            markAsUndone(i); // Đánh dấu task là "undone"
+            console.log("undone task nè bà");
+        }
+    });
+});
+
 
 document.querySelector("#enter").addEventListener("click", () => {
-  const item = document.querySelector("#item")
-  createItem(item)
+  const item = document.querySelector("#item").value.trim()
+  // createItem(item)
+  const errors = document.querySelector("#error");
+  errors.style.display = "none";
+    if (!item) {
+      setTimeout(() => {
+        errors.style.display = "block";
+      }, 200);
+    } else {
+      createItem(item);
+    }
+    e.preventDefault();
+
 })
 
 document.querySelector("#item").addEventListener("keypress", (e) => {
-  if(e.key === "Enter"){
-    const item = document.querySelector("#item")
-    createItem(item)
+  const errors = document.querySelector("#error");
+  errors.style.display = "none"; // Sử dụng `errors` thay vì `error`
+  if (e.key === "Enter") {
+    const item = document.querySelector("#item").value.trim();
+    if (!item) {
+      setTimeout(() => {
+        errors.style.display = "block";
+      }, 200);
+    } else {
+      createItem(item);
+     
+    }
+    e.preventDefault();
+  
   }
 })
 
-function displayDate(){
-  let date = new Date()
-  date = date.toString().split(" ")
-  date = date[1] + " " + date[2] + " " + date[3] 
-  // document.querySelector("#date").innerHTML = date 
-}
+
 
 function displayItems(){
   let items = ""
+  
   for(let i = 0; i < itemsArray.length; i++){
+    const item = itemsArray[i];
     items += `<div class="item">
                 <div class="input-controller">
-                  <textarea disabled>${itemsArray[i]}</textarea>
+                <input type="checkbox" class="check-box">
+                  <textarea disabled>${item.text}</textarea>
                   <div class="edit-controller">
-                    <i class="fa-solid fa-check deleteBtn"></i>
+                    <i class=" fa-solid fa-trash deleteBtn"></i>
                     <i class="fa-solid fa-pen-to-square editBtn"></i>
                   </div>
                 </div>
@@ -142,6 +124,7 @@ function activateDeleteListeners(){
   deleteBtn.forEach((dB, i) => {
     dB.addEventListener("click", () => { deleteItem(i) })
   })
+ 
 }
 
 function activateEditListeners(){
@@ -178,25 +161,47 @@ function activateCancelListeners(){
   })
 }
 
-function createItem(item){
-  itemsArray.push(item.value)
-  localStorage.setItem('items', JSON.stringify(itemsArray))
-  location.reload()
-}
+
 
 function deleteItem(i){
   itemsArray.splice(i,1)
   localStorage.setItem('items', JSON.stringify(itemsArray))
-  location.reload()
+  // location.reload()
+  displayItems(); 
+  taskCount--; 
+  displayCount(taskCount); 
 }
 
 function updateItem(text, i){
   itemsArray[i] = text
   localStorage.setItem('items', JSON.stringify(itemsArray))
-  location.reload()
+  displayItems(); 
+}
+const error = document.getElementById('error');
+
+// taskCheck.forEach((checkBox) => {
+//     checkBox.addEventListener('change', function() {
+//         const itemText = this.closest('.item').querySelector('textarea');
+//         if (this.checked) {
+//             itemText.style.textDecoration = "line-through";
+//             console.log("done task")
+//         } else {
+//             itemText.style.textDecoration = "none";
+//             console.log("undone task")
+//         }
+//     });
+// });
+
+  //  taskCount += 1;
+  //  displayCount(taskCount);
+   
+function doneItem(text, i)
+{
+
+
 }
 
 window.onload = function() {
-  displayDate()
+  // displayDate()
   displayItems()
 };
