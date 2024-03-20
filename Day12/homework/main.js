@@ -1,8 +1,11 @@
+
+
 const itemsArray = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
   : [];
 const count = document.querySelector(".count-value");
 let taskCount = 0;
+let isEditing = false;
 
 const displayCount = (taskCount) => {
   count.innerText = taskCount;
@@ -36,16 +39,16 @@ function markAsUndone(i) {
   localStorage.setItem("items", JSON.stringify(itemsArray));
   displayItems();
 }
-document.querySelector("#enter").addEventListener("click", () => {
+document.querySelector("#enter").addEventListener("click", (e) => {
   const itemInput = document.querySelector("#item");
   const item = itemInput.value.trim();
   const errors = document.querySelector("#error");
   errors.style.display = "none";
-  if (!item) {
-    setTimeout(() => {
-      errors.style.display = "block";
-    }, 200);
-  } else  {
+  if (!item || isEditing) {
+    // setTimeout(() => {
+    //   errors.style.display = "block";
+    // }, 200);
+  } else {
     createItem(item);
     // Xóa nội dung của input sau khi tạo task thành công
     itemInput.value = "";
@@ -55,14 +58,12 @@ document.querySelector("#enter").addEventListener("click", () => {
 
 // Xử lý sự kiện click cho nút "Edit Task"
 
-
-
 document.querySelector("#item").addEventListener("keypress", (e) => {
   // e.preventDefault();
 
   const errors = document.querySelector("#error");
   errors.style.display = "none"; // Sử dụng `errors` thay vì `error`
-  if (e.key === "Enter") {
+  if (e.key === "Enter" && !isEditing) {
     // const item = document.querySelector("#item").value.trim();
     const itemInput = document.querySelector("#item");
     const item = itemInput.value.trim();
@@ -75,7 +76,6 @@ document.querySelector("#item").addEventListener("keypress", (e) => {
       itemInput.value = "";
     }
   }
-  
 });
 
 function displayItems() {
@@ -117,7 +117,8 @@ function displayItemDone() {
     const checkedAttribute = item.status === "done" ? "checked" : "";
     const textDecoration = item.status === "done" ? "line-through" : "none";
 
-    if (item.status === "done") { // Kiểm tra xem task có status là "done" hay không
+    if (item.status === "done") {
+      // Kiểm tra xem task có status là "done" hay không
       items += `<div class="item">
                   <div class="input-controller">
                   <input type="checkbox" class="check-box" ${checkedAttribute}>
@@ -147,7 +148,6 @@ document.querySelector(".done").addEventListener("click", () => {
   displayItemDone();
 });
 
-
 function displayItemUnDone() {
   let items = "";
 
@@ -156,7 +156,8 @@ function displayItemUnDone() {
     const checkedAttribute = item.status === "done" ? "checked" : "";
     const textDecoration = item.status === "done" ? "line-through" : "none";
 
-    if (item.status === "undone") { // Kiểm tra xem task có status là "done" hay không
+    if (item.status === "undone") {
+      // Kiểm tra xem task có status là "done" hay không
       items += `<div class="item">
                   <div class="input-controller">
                   <input type="checkbox" class="check-box" ${checkedAttribute}>
@@ -185,8 +186,6 @@ function displayItemUnDone() {
 document.querySelector(".undone").addEventListener("click", () => {
   displayItemUnDone();
 });
-
-
 
 document.querySelector(".all").addEventListener("click", () => {
   displayItems();
@@ -220,33 +219,44 @@ function activateDeleteListeners() {
 }
 function activateEditListeners() {
   const editBtns = document.querySelectorAll(".editBtn");
-  
+
   editBtns.forEach((editBtn, i) => {
     editBtn.addEventListener("click", () => {
       // Lấy nội dung của task tương ứng
       const taskText = itemsArray[i].text;
 
-      // Hiển thị nội dung của task lên input
+      // Hiển thị nội dung của task lên input tương ứng
       const itemInput = document.querySelector("#item");
       itemInput.value = taskText;
 
       // Thay đổi nút "Enter" thành nút "Edit Task"
       const enterBtn = document.querySelector("#enter");
       enterBtn.textContent = "Edit Task";
-      enterBtn.id = "edit-task"
-      
+      enterBtn.id = "edit-task";
+
       const item = itemInput.value.trim();
+      isEditing = true;
+      const editTaskHandler = function () {
+        const errors = document.querySelector("#error");
+        errors.style.display = "none";
+        if (!item) {
+          setTimeout(() => {
+            errors.style.display = "block";
+          }, 200);
+        } else {
+          updateItem(itemInput.value, i);
+          itemInput.value = "";
+          enterBtn.textContent = "Enter";
+          enterBtn.id = "enter";
+          isEditing = false;
+          enterBtn.removeEventListener("click", editTaskHandler);
+        }
+      };
 
-      // Thêm sự kiện click cho nút "Edit Task"
-      enterBtn.addEventListener('click', function () {
-        updateItem(itemInput.value, i);
-      });
-
+      enterBtn.addEventListener("click", editTaskHandler);
     });
   });
 }
-
-
 
 function activateSaveListeners() {
   const saveBtn = document.querySelectorAll(".saveBtn");
@@ -281,36 +291,45 @@ function deleteItem(i) {
 }
 
 function updateItem(text, i) {
+  console.log("text: " + text);
   itemsArray[i].text = text;
+  console.log("i" + i);
+  console.log(itemsArray);
+  console.log("itemsArray[i].text: " + itemsArray[i].text + " " + i);
   localStorage.setItem("items", JSON.stringify(itemsArray));
   displayItems();
+
+  const enterBtn = document.querySelector("#edit-task");
+  if (enterBtn) {
+    enterBtn.textContent = "Enter";
+    enterBtn.id = "enter";
+  }
 }
 
 const error = document.getElementById("error");
 
-
-document.querySelector("#edit-task").addEventListener("click", () => {
-  const itemInput = document.querySelector("#item");
-  const item = itemInput.value.trim();
-  const errors = document.querySelector("#error");
-  errors.style.display = "none";
-  if (!item) {
-    setTimeout(() => {
-      errors.style.display = "block";
-    }, 200);
-  } else {
-    // Lấy vị trí của item trong itemsArray
-    const index = itemsArray.findIndex(obj => obj.text === item);
-    if (index !== -1) {
-      updateItem(item, index);
-      // Xóa nội dung của input sau khi chỉnh sửa task thành công
-      itemInput.value = "";
-    } else {
-      console.error("Item not found in itemsArray");
-    }
-  }
-});
-
+// document.querySelector("#edit-task").addEventListener("click", () => {
+//   const itemInput = document.querySelector("#item");
+//   const item = itemInput.value.trim();
+//   const errors = document.querySelector("#error");
+//   errors.style.display = "none";
+//   if (!item) {
+//     setTimeout(() => {
+//       errors.style.display = "block";
+//     }, 200);
+//   } else {
+//     // Lấy vị trí của item trong itemsArray
+//     const index = itemsArray.findIndex((i) => i.text === item);
+//     console.log("---->" + index);
+//     if (index !== -1) {
+//       updateItem(item, index);
+//       // Xóa nội dung của input sau khi chỉnh sửa task thành công
+//       itemInput.value = "";
+//     } else {
+//       console.error("Item not found in itemsArray");
+//     }
+//   }
+// });
 
 window.onload = function () {
   // displayDate()
