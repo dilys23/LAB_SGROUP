@@ -1,13 +1,12 @@
-
-const itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+const itemsArray = localStorage.getItem("items")
+  ? JSON.parse(localStorage.getItem("items"))
+  : [];
 const count = document.querySelector(".count-value");
 let taskCount = 0;
 
-
-const displayCount = (taskCount) =>
-{
+const displayCount = (taskCount) => {
   count.innerText = taskCount;
-}
+};
 
 // function createItem(item){
 //   itemsArray.push(item);
@@ -17,90 +16,80 @@ const displayCount = (taskCount) =>
 //   displayCount(taskCount); // Hiển thị số lượng nhiệm vụ mới
 // }
 
-const taskCheck = document.querySelectorAll(".check-box");
-
-function createItem(item){
-  const newItem = { text: item, status: "undone" }; 
+function createItem(item) {
+  const newItem = { text: item, status: "undone" };
   itemsArray.push(newItem);
-  localStorage.setItem('items', JSON.stringify(itemsArray));
-  displayItems(); 
-  taskCount++; 
+  localStorage.setItem("items", JSON.stringify(itemsArray));
+  displayItems();
+  taskCount++;
   displayCount(taskCount);
 }
 
 function markAsDone(i) {
-  itemsArray[i].status = "done"; 
-  localStorage.setItem('items', JSON.stringify(itemsArray));
+  itemsArray[i].status = "done";
+  localStorage.setItem("items", JSON.stringify(itemsArray));
   displayItems();
 }
 
 function markAsUndone(i) {
-  itemsArray[i].status = "undone"; 
-  localStorage.setItem('items', JSON.stringify(itemsArray)); 
+  itemsArray[i].status = "undone";
+  localStorage.setItem("items", JSON.stringify(itemsArray));
   displayItems();
 }
-
-taskCheck.forEach((checkBox, i) => {
-    checkBox.addEventListener('change', function() {
-        const itemText = this.closest('.item').querySelector('textarea');
-        if (this.checked) {
-            itemText.style.textDecoration = "line-through";
-            markAsDone(i); 
-            console.log("done task nè heee");
-        } else {
-            itemText.style.textDecoration = "none";
-            markAsUndone(i); // Đánh dấu task là "undone"
-            console.log("undone task nè bà");
-        }
-    });
-});
-
-
 document.querySelector("#enter").addEventListener("click", () => {
-  const item = document.querySelector("#item").value.trim()
-  // createItem(item)
+  const itemInput = document.querySelector("#item");
+  const item = itemInput.value.trim();
   const errors = document.querySelector("#error");
   errors.style.display = "none";
-    if (!item) {
-      setTimeout(() => {
-        errors.style.display = "block";
-      }, 200);
-    } else {
-      createItem(item);
-    }
-    e.preventDefault();
+  if (!item) {
+    setTimeout(() => {
+      errors.style.display = "block";
+    }, 200);
+  } else  {
+    createItem(item);
+    // Xóa nội dung của input sau khi tạo task thành công
+    itemInput.value = "";
+  }
+  e.preventDefault();
+});
 
-})
+// Xử lý sự kiện click cho nút "Edit Task"
+
+
 
 document.querySelector("#item").addEventListener("keypress", (e) => {
+  // e.preventDefault();
+
   const errors = document.querySelector("#error");
   errors.style.display = "none"; // Sử dụng `errors` thay vì `error`
   if (e.key === "Enter") {
-    const item = document.querySelector("#item").value.trim();
+    // const item = document.querySelector("#item").value.trim();
+    const itemInput = document.querySelector("#item");
+    const item = itemInput.value.trim();
     if (!item) {
       setTimeout(() => {
         errors.style.display = "block";
       }, 200);
     } else {
       createItem(item);
-     
+      itemInput.value = "";
     }
-    e.preventDefault();
-  
   }
-})
-
-
-
-function displayItems(){
-  let items = ""
   
-  for(let i = 0; i < itemsArray.length; i++){
+});
+
+function displayItems() {
+  let items = "";
+
+  for (let i = 0; i < itemsArray.length; i++) {
     const item = itemsArray[i];
+    const checkedAttribute = item.status === "done" ? "checked" : "";
+    const textDecoration = item.status === "done" ? "line-through" : "none";
+
     items += `<div class="item">
                 <div class="input-controller">
-                <input type="checkbox" class="check-box">
-                  <textarea disabled>${item.text}</textarea>
+                <input type="checkbox" class="check-box" ${checkedAttribute}>
+                  <textarea disabled style="text-decoration: ${textDecoration};">${item.text}</textarea>
                   <div class="edit-controller">
                     <i class=" fa-solid fa-trash deleteBtn"></i>
                     <i class="fa-solid fa-pen-to-square editBtn"></i>
@@ -110,98 +99,220 @@ function displayItems(){
                   <button class="saveBtn">Save</button>
                   <button class="cancelBtn">Cancel</button>
                 </div>
-              </div>`
+              </div>`;
   }
-  document.querySelector(".to-do-list").innerHTML = items
-  activateDeleteListeners()
-  activateEditListeners()
-  activateSaveListeners()
-  activateCancelListeners()
+  document.querySelector(".to-do-list").innerHTML = items;
+  activateDeleteListeners();
+  activateEditListeners();
+  activateSaveListeners();
+  activateCancelListeners();
+  addCheckboxListeners();
 }
 
-function activateDeleteListeners(){
-  let deleteBtn = document.querySelectorAll(".deleteBtn")
+function displayItemDone() {
+  let items = "";
+
+  for (let i = 0; i < itemsArray.length; i++) {
+    const item = itemsArray[i];
+    const checkedAttribute = item.status === "done" ? "checked" : "";
+    const textDecoration = item.status === "done" ? "line-through" : "none";
+
+    if (item.status === "done") { // Kiểm tra xem task có status là "done" hay không
+      items += `<div class="item">
+                  <div class="input-controller">
+                  <input type="checkbox" class="check-box" ${checkedAttribute}>
+                    <textarea disabled style="text-decoration: ${textDecoration};">${item.text}</textarea>
+                    <div class="edit-controller">
+                      <i class="fa-solid fa-trash deleteBtn"></i>
+                      <i class="fa-solid fa-pen-to-square editBtn"></i>
+                    </div>
+                  </div>
+                  <div class="update-controller">
+                    <button class="saveBtn">Save</button>
+                    <button class="cancelBtn">Cancel</button>
+                  </div>
+                </div>`;
+    }
+  }
+
+  document.querySelector(".to-do-list").innerHTML = items;
+  activateDeleteListeners();
+  activateEditListeners();
+  activateSaveListeners();
+  activateCancelListeners();
+  addCheckboxListeners();
+}
+
+document.querySelector(".done").addEventListener("click", () => {
+  displayItemDone();
+});
+
+
+function displayItemUnDone() {
+  let items = "";
+
+  for (let i = 0; i < itemsArray.length; i++) {
+    const item = itemsArray[i];
+    const checkedAttribute = item.status === "done" ? "checked" : "";
+    const textDecoration = item.status === "done" ? "line-through" : "none";
+
+    if (item.status === "undone") { // Kiểm tra xem task có status là "done" hay không
+      items += `<div class="item">
+                  <div class="input-controller">
+                  <input type="checkbox" class="check-box" ${checkedAttribute}>
+                    <textarea disabled style="text-decoration: ${textDecoration};">${item.text}</textarea>
+                    <div class="edit-controller">
+                      <i class="fa-solid fa-trash deleteBtn"></i>
+                      <i class="fa-solid fa-pen-to-square editBtn"></i>
+                    </div>
+                  </div>
+                  <div class="update-controller">
+                    <button class="saveBtn">Save</button>
+                    <button class="cancelBtn">Cancel</button>
+                  </div>
+                </div>`;
+    }
+  }
+
+  document.querySelector(".to-do-list").innerHTML = items;
+  activateDeleteListeners();
+  activateEditListeners();
+  activateSaveListeners();
+  activateCancelListeners();
+  addCheckboxListeners();
+}
+
+document.querySelector(".undone").addEventListener("click", () => {
+  displayItemUnDone();
+});
+
+
+
+document.querySelector(".all").addEventListener("click", () => {
+  displayItems();
+});
+
+function addCheckboxListeners() {
+  const taskCheck = document.querySelectorAll(".check-box");
+  taskCheck.forEach((checkBox, i) => {
+    checkBox.addEventListener("change", function () {
+      const itemText = this.closest(".item").querySelector("textarea");
+      if (this.checked) {
+        itemText.style.textDecoration = "line-through";
+        markAsDone(i);
+        console.log("done task nè heee");
+      } else {
+        itemText.style.textDecoration = "none";
+        markAsUndone(i); // Đánh dấu task là "undone"
+        console.log("undone task nè bà");
+      }
+    });
+  });
+}
+
+function activateDeleteListeners() {
+  let deleteBtn = document.querySelectorAll(".deleteBtn");
   deleteBtn.forEach((dB, i) => {
-    dB.addEventListener("click", () => { deleteItem(i) })
-  })
- 
+    dB.addEventListener("click", () => {
+      deleteItem(i);
+    });
+  });
+}
+function activateEditListeners() {
+  const editBtns = document.querySelectorAll(".editBtn");
+  
+  editBtns.forEach((editBtn, i) => {
+    editBtn.addEventListener("click", () => {
+      // Lấy nội dung của task tương ứng
+      const taskText = itemsArray[i].text;
+
+      // Hiển thị nội dung của task lên input
+      const itemInput = document.querySelector("#item");
+      itemInput.value = taskText;
+
+      // Thay đổi nút "Enter" thành nút "Edit Task"
+      const enterBtn = document.querySelector("#enter");
+      enterBtn.textContent = "Edit Task";
+      enterBtn.id = "edit-task"
+      
+      const item = itemInput.value.trim();
+
+      // Thêm sự kiện click cho nút "Edit Task"
+      enterBtn.addEventListener('click', function () {
+        updateItem(itemInput.value, i);
+      });
+
+    });
+  });
 }
 
-function activateEditListeners(){
-  const editBtn = document.querySelectorAll(".editBtn")
-  const updateController = document.querySelectorAll(".update-controller")
-  const inputs = document.querySelectorAll(".input-controller textarea")
-  editBtn.forEach((eB, i) => {
-    eB.addEventListener("click", () => { 
-      updateController[i].style.display = "block"
-      inputs[i].disabled = false })
-  })
-}
 
-function activateSaveListeners(){
-  const saveBtn = document.querySelectorAll(".saveBtn")
-  const inputs = document.querySelectorAll(".input-controller textarea")
+
+function activateSaveListeners() {
+  const saveBtn = document.querySelectorAll(".saveBtn");
+  const inputs = document.querySelectorAll(".input-controller textarea");
   saveBtn.forEach((sB, i) => {
     sB.addEventListener("click", () => {
-      updateItem(inputs[i].value, i)
-    })
-  })
+      updateItem(inputs[i].value, i);
+    });
+  });
 }
 
-function activateCancelListeners(){
-  const cancelBtn = document.querySelectorAll(".cancelBtn")
-  const updateController = document.querySelectorAll(".update-controller")
-  const inputs = document.querySelectorAll(".input-controller textarea")
+function activateCancelListeners() {
+  const cancelBtn = document.querySelectorAll(".cancelBtn");
+  const updateController = document.querySelectorAll(".update-controller");
+  const inputs = document.querySelectorAll(".input-controller textarea");
   cancelBtn.forEach((cB, i) => {
     cB.addEventListener("click", () => {
-      updateController[i].style.display = "none"
-      inputs[i].disabled = true
-      inputs[i].style.border = "none"
-    })
-  })
+      updateController[i].style.display = "none";
+      inputs[i].disabled = true;
+      inputs[i].style.border = "none";
+    });
+  });
 }
 
-
-
-function deleteItem(i){
-  itemsArray.splice(i,1)
-  localStorage.setItem('items', JSON.stringify(itemsArray))
+function deleteItem(i) {
+  itemsArray.splice(i, 1);
+  localStorage.setItem("items", JSON.stringify(itemsArray));
   // location.reload()
-  displayItems(); 
-  taskCount--; 
-  displayCount(taskCount); 
+  displayItems();
+  taskCount--;
+  displayCount(taskCount);
 }
 
-function updateItem(text, i){
-  itemsArray[i] = text
-  localStorage.setItem('items', JSON.stringify(itemsArray))
-  displayItems(); 
-}
-const error = document.getElementById('error');
-
-// taskCheck.forEach((checkBox) => {
-//     checkBox.addEventListener('change', function() {
-//         const itemText = this.closest('.item').querySelector('textarea');
-//         if (this.checked) {
-//             itemText.style.textDecoration = "line-through";
-//             console.log("done task")
-//         } else {
-//             itemText.style.textDecoration = "none";
-//             console.log("undone task")
-//         }
-//     });
-// });
-
-  //  taskCount += 1;
-  //  displayCount(taskCount);
-   
-function doneItem(text, i)
-{
-
-
+function updateItem(text, i) {
+  itemsArray[i].text = text;
+  localStorage.setItem("items", JSON.stringify(itemsArray));
+  displayItems();
 }
 
-window.onload = function() {
+const error = document.getElementById("error");
+
+
+document.querySelector("#edit-task").addEventListener("click", () => {
+  const itemInput = document.querySelector("#item");
+  const item = itemInput.value.trim();
+  const errors = document.querySelector("#error");
+  errors.style.display = "none";
+  if (!item) {
+    setTimeout(() => {
+      errors.style.display = "block";
+    }, 200);
+  } else {
+    // Lấy vị trí của item trong itemsArray
+    const index = itemsArray.findIndex(obj => obj.text === item);
+    if (index !== -1) {
+      updateItem(item, index);
+      // Xóa nội dung của input sau khi chỉnh sửa task thành công
+      itemInput.value = "";
+    } else {
+      console.error("Item not found in itemsArray");
+    }
+  }
+});
+
+
+window.onload = function () {
   // displayDate()
-  displayItems()
+  displayItems();
 };
