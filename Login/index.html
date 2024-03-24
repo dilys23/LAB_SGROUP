@@ -1,38 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+  </head>
+  <body>
     <div class="form-structor">
-        <div class="signup">
-            <h2 class="form-title" id="signup">
-                <span>or</span>
-                Sign up
+      <div class="signup">
+        <form id="formRegister">
+          <h2 class="form-title" id="signup" style="color: black">
+            <span>or</span>
+            Sign up
+          </h2>
+          <div class="form-holder">
+            <input
+              type="text"
+              class="input"
+              id="nameRegister"
+              placeholder="Name"
+            />
+            <input
+              type="email"
+              class="iput"
+              id="emailRegister"
+              placeholder="Email"
+            />
+            <input
+              type="password"
+              class="input"
+              id="passwordRegister"
+              placeholder="Password"
+            />
+          </div>
+          <button class="submit-btn" type="submit" id="signup">Sign up</button>
+        </form>
+      </div>
+      <div class="login slide-up">
+        <form id="formLogin">
+          <div class="center">
+            <h2 class="form-title" id="login" style="color: black">
+              <span>or</span>
+              Login
             </h2>
             <div class="form-holder">
-                <input type="text" class="input" placeholder="Name">
-                <input type="email" class="iput" placeholder="Email">
-                <input type="password" class="input" placeholder="Password">
+              <input
+                type="email"
+                class="input"
+                id="emailLogin"
+                placeholder="Email"
+              />
+              <input
+                type="password"
+                id="passwordLogin"
+                class="input"
+                placeholder="Password"
+              />
             </div>
-            <button class="submit-btn">Sign up</button>
-        </div>
-        <div class="login slide-up">
-            <div class="center">
-                <h2 class="form-title" id="login">
-                    <span>or</span>
-                    Login
-                </h2>
-                <div class="form-holder">
-                    <input type="email" class="iput" placeholder="Email">
-                    <input type="password" class="input" placeholder="Password">
-                </div>
-                <button class="submit-btn">Log in</button>
-            </div>
-        </div>
+            <button class="submit-btn" type="submit" id="login">Log in</button>
+          </div>
+        </form>
+      </div>
     </div>
-</body>
+    <script src="main.js"></script>
+  </body>
 </html>

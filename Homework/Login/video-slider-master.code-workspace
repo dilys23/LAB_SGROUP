@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "C:/Users/HP VICTUS/Downloads/video-slider-master"
+		},
+		{
+			"path": "../../../LandingPage"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../Project"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "video-slider-master"
+	}
+}

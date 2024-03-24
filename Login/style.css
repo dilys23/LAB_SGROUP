@@ -6,6 +6,10 @@
     width: 350px;
     position: relative;
     overflow:hidden;
+    /* display: flex; */
+    /* justify-content: center; */
+    margin-top: 200px;
+    margin-left: 800px;
 }
 .form-structor::after
 {
