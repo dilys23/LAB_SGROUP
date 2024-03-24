@@ -44,6 +44,7 @@ function loginSubmit(event) {
       if (res.status != 200) {
         alert("Đăng nhập thất bại");
         console.log(res);
+        console.log("chua nhap thong tin");
         
        
       } else if (res.status == 200) {
@@ -56,6 +57,7 @@ function loginSubmit(event) {
         // {
           document.getElementById("login-btn").innerHTML = "Logout";
           document.getElementById("login-btn").addEventListener("click", logout);
+          console.log("log out ne");
          
         // }
         // isLoggedIn = false;
@@ -64,6 +66,7 @@ function loginSubmit(event) {
     .catch((err) => {
       alert("Đăng nhập thất bại");
       console.log(err);
+      console.log("loi catch");
     });
   event.preventDefault();
 }
