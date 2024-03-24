@@ -20,7 +20,9 @@ const formLogin = document.getElementById("formLogin");
 
 function logout() {
   localStorage.removeItem("access_token");
-  document.getElementById("login-btn").innerHTML = "Login";
+  let logoutBtn = document.getElementById("logout-btn");
+  logoutBtn.innerHTML = "Login";
+  logoutBtn.id = "login-btn";
   alert("Đăng xuất thành công");
   loginEmail.value = "";
   loginPassword.value = "";
@@ -55,9 +57,16 @@ function loginSubmit(event) {
         // isLoggedIn = true;
         // if ( isLoggedIn)
         // {
-          document.getElementById("login-btn").innerHTML = "Logout";
-          document.getElementById("login-btn").addEventListener("click", logout);
-          console.log("log out ne");
+        let loginBtn = document.getElementById("login-btn")
+          loginBtn.innerHTML = "Logout";
+          loginBtn.id = "logout-btn";
+          loginBtn.addEventListener("click", function(event)
+          {
+            event.preventDefault();
+            logout();
+            console.log("log out ne");
+          });
+          
          
         // }
         // isLoggedIn = false;
